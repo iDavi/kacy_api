@@ -9,7 +9,7 @@ import Config
 config :kacy_api, KacyApiWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
-  http: [ip: {127, 0, 0, 1}, port: 4000],
+  http: [ip: {127, 0, 0, 1}, port: 3000],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
@@ -17,7 +17,7 @@ config :kacy_api, KacyApiWeb.Endpoint,
   watchers: []
 
 
-config :kacy_api, :cors_origins, ["http://localhost:4200", "http://127.0.0.1:4200"]
+config :kacy_api, :cors_origins, ["http://localhost:3300", "http://127.0.0.1:3300"]
 
 # ## SSL Support
 #
