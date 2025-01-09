@@ -15,9 +15,20 @@ defmodule KacyApiWeb.RoomChannelTest do
     assert_reply ref, :ok, %{"hello" => "there"}
   end
 
-  test "shout broadcasts to room:lobby", %{socket: socket} do
-    push(socket, "shout", %{"hello" => "all"})
-    assert_broadcast "shout", %{"hello" => "all"}
+  test "send a valid message to the room", %{socket: socket} do
+    ref =
+      push(socket, "message", %{
+        authorName: "Alice",
+        content: "Hello, world!",
+        signature: "Best regards"
+      })
+
+
+      assert_broadcast("messageSent", %{
+        authorName: "Alice",
+        content: "Hello, world!",
+        signature: "Best regards"
+      })
   end
 
   test "broadcasts are pushed to the client", %{socket: socket} do
