@@ -24,12 +24,25 @@ defmodule KacyApiWeb.RoomChannelTest do
       })
 
 
-      assert_broadcast("messageSent", %{
+      assert_broadcast "messageSent", %{
         authorName: "Alice",
         content: "Hello, world!",
         signature: "Best regards"
-      })
+      }
   end
+
+  test "send a invalid message to the room (author name in blank)", %{socket: socket} do
+    ref =
+      push(socket, "message", %{
+        authorName: "",
+        content: "Hello, world!",
+        signature: "Best regards"
+      })
+
+
+      assert_reply ref, :ok, %{error: "author name can't be blank!"}
+  end
+
 
   test "broadcasts are pushed to the client", %{socket: socket} do
     broadcast_from!(socket, "broadcast", %{"some" => "data"})
