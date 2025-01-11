@@ -1,8 +1,8 @@
 defmodule KacyApi.Message do
   @derive Jason.Encoder
-  defstruct [:authorName, :content, :signature]
+  defstruct [:authorName, :content, :signature, :id]
 
-  @spec create(map()) :: map()
+  @spec create(map()) :: %__MODULE__{}
   def create(params) do
     message_map =
       params
@@ -10,6 +10,8 @@ defmodule KacyApi.Message do
         {key, value} when is_binary(key) -> {String.to_atom(key), value}
         {key, value} -> {key, value}
       end)
+      |> Map.put(:id, UUID.uuid4())
+
     struct(__MODULE__, message_map)
   end
 
